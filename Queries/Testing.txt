@@ -1,0 +1,11 @@
+CREATE OR REPLACE PROCEDURE runTests
+IS
+
+BEGIN
+	FOR i IN 1..3 LOOP
+		EXECUTE IMMEDIATE 'alter tablespace xjw9075_ts offline';
+		EXECUTE IMMEDIATE 'alter tablespace xjw9075_ts online';
+		EXECUTE IMMEDIATE 'SELECT c.Cust_name, s.total_price FROM Customer c, Sales s WHERE s.Cust_id < 1000 AND s.Cust_id = c.Cust_id';
+	END LOOP;
+END;
+/

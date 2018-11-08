@@ -1,0 +1,40 @@
+SELECT c.Cust_name, s.total_price
+FROM Customer c, Sales s
+WHERE s.total_price > 1000
+AND units_sold > 10
+AND s.Cust_id = c.Cust_id;
+
+SELECT c.Cust_name, s.total_price FROM Customer c, Sales s WHERE s.total_price > 1000 AND units_sold > 10 AND s.Cust_id = c.Cust_id;
+
+SELECT c.Cust_name, s.total_price FROM Sales s, Customer c WHERE s.Cust_id = c.Cust_id ORDER BY c.Cust_name;
+
+SELECT count(*) from Sales s, Customer c WHERE s.Cust_id < 500 AND s.Cust_id = c.Cust_id;
+
+SELECT c.Cust_name, s.total_price FROM Sales s, Customer c WHERE s.Cust_id = c.Cust_id AND c.Cust_name LIKE '%A';
+
+Execute dbms_stats.gather_table_stats ('xjw9075_dev', 'sales');
+Execute dbms_stats.gather_table_stats ('xjw9075_dev', 'customer');
+
+INSERT INTO Customer SELECT * FROM CustomerData;
+INSERT INTO Sales SELECT * FROM SalesData;
+
+
+CREATE OR REPLACE PROCEDURE randomizeCustomerNames
+IS
+	v_cust_name		Customer.Cust_name%TYPE;
+	
+BEGIN
+	FOR i IN 1..9000 LOOP
+	
+		SELECT dbms_random.string('u', 25)
+		INTO v_cust_name
+		FROM dual;
+		
+		UPDATE Customer
+		SET Cust_name = v_cust_name
+		WHERE Cust_id = i;
+	
+	END LOOP;
+	
+END;
+/

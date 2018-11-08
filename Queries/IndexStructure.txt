@@ -1,0 +1,25 @@
+-- Add index on joining column Cust_id in Sales
+CREATE INDEX sale_custid_index ON Sales(Cust_id) TABLESPACE xjw9075_ts;
+
+-- Add unique index on join tables column
+CREATE UNIQUE INDEX cust_id_index ON Customer(Cust_id) TABLESPACE xjw9075_ts;
+
+CREATE UNIQUE INDEX sale_saleid_index ON Sales(Sale_id) TABLESPACE xjw9075_ts;
+
+Execute dbms_stats.gather_index_stats ('xjw9075_dev', 'sale_custid_index');
+Execute dbms_stats.gather_index_stats ('xjw9075_dev', 'cust_id_index');
+
+
+SELECT /*+ index(Sales, sale_custid_index) */ c.Cust_name, s.total_price FROM Customer c, Sales s WHERE s.total_price > 1000 AND units_sold > 10 AND s.Cust_id = c.Cust_id;
+
+SELECT /*+ index(Sales, sale_custid_index) */ c.Cust_name, s.total_price FROM Customer c, Sales s WHERE s.Cust_id < 100 AND s.Cust_id = c.Cust_id;
+
+
+-- mid
+SELECT c.Cust_name, s.total_price FROM Customer c, Sales s WHERE s.Cust_id < 1000 AND s.Cust_id = c.Cust_id;
+
+-- low
+SELECT c.Cust_name, s.total_price FROM Customer c, Sales s WHERE s.Cust_id < 500 AND s.Cust_id = c.Cust_id;
+
+-- high
+SELECT c.Cust_name, s.total_price FROM Customer c, Sales s WHERE s.Cust_id < 2000 AND s.Cust_id = c.Cust_id;
