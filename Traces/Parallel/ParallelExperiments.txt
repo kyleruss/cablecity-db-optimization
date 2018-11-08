@@ -1,0 +1,4 @@
+-- WITH HALF No. CPU's
+
+-- HIGH
+SELECT c.Cust_name, s.total_price FROM Customer c, Sales s WHERE s.Cust_id < 1000 AND s.Cust_id = c.Cust_id;
