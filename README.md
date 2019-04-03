@@ -1,4 +1,4 @@
-<img src="Icon.png" align="left" />
+<img src="preview/AppIcon.png" align="left" />
 
 # cablecity-db-optimization
 Oracle PL/SQL Query optimization for the [cablecity database](https://github.com/kyleruss/cablecity-db). The motivation for this project was to apply  
